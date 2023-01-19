@@ -4,7 +4,7 @@ export const SPOTLIGTH = [
     name: "MetaSamurai",
     price: "4.8 ETH",
     bgimage:
-      "https://i.seadn.io/gcs/files/9505a158f64930d0b9e1e3d7fcc36d08.png?auto=format&w=1920",
+      "https://i.seadn.io/gcs/files/934ec410aa1753ab2d554b6e6aa8d364.png?auto=format&w=1920",
     image:
       "https://i.seadn.io/gcs/files/0a55ec9f41608c45b5812767c80c94d3.gif?auto=format&w=256",
     creator: "THE 12 ZODIAC",

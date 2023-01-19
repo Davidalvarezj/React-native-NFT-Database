@@ -15,8 +15,9 @@ export default function Spotlights({ spotlightArray }) {
     <FlatList
       data={spotlightArray}
       showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
       horizontal={true}
-      keyExtractor={(elm) => String(elm.id)}
+      keyExtractor={(elm, index) => String(`${elm.id}-${index}`)}
       renderItem={({ item }) => <SpotligthCard cardInfo={item} />}
       contentContainerStyle={styles.flatListContentContainer}
     />
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
     height: 240,
     backgroundColor: "rgba(0,0,0,0.4)",
     borderRadius: 10,
+    overflow: "hidden",
   },
 });
 
@@ -50,6 +52,7 @@ const SpotligthCard = ({ cardInfo }) => {
           borderRadius: 10,
           height: 240,
           margin: 5,
+          overflow: "hidden",
         }}
       >
         <Card.Image source={{ uri: cardInfo.image }} style={styles.cardImg}>
