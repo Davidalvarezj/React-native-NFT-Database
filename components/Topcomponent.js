@@ -1,17 +1,11 @@
-import { View, Text, FlatList, TouchableWithoutFeedback } from "react-native";
-import { Image } from "react-native-elements";
-import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { FlatList, Text, View, TouchableWithoutFeedback } from "react-native";
 import React from "react";
-import Topcomponent from "../components/Topcomponent";
+import { Card, Image } from "react-native-elements";
+import { useNavigation } from "@react-navigation/native";
 
-export default function StatsScreen() {
-  const topstate = useSelector((state) => state.top);
+export default function Topcomponent({ top5Array }) {
+  // console.log("top 5 Array: ", top5Array);
 
-  const topArray = topstate.topArray;
-  const top10Array = topArray.filter((elm) => elm.rankedpos < 11);
-
-  // console.log("topstate: ", top10Array);
   return (
     <View
       style={{
@@ -58,7 +52,7 @@ export default function StatsScreen() {
         </Text>
       </View>
       <FlatList
-        data={top10Array}
+        data={top5Array}
         renderItem={({ item }) => <List cardInfo={item} />}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{ paddingTop: 0 }}
@@ -74,7 +68,6 @@ const List = ({ cardInfo }) => {
 
     navigation.navigate("Collection", { id: cardInfo.id });
   }
-
   return (
     <TouchableWithoutFeedback onPress={() => hanndlePress()}>
       <View style={{ flexDirection: "row", paddingTop: 10 }}>
@@ -89,11 +82,12 @@ const List = ({ cardInfo }) => {
             {cardInfo.rankedpos}
           </Text>
         </View>
-        <View style={{ width: 50, borderRadius: 50, overflow: "hidden" }}>
+        <View style={{ width: 50 }}>
           <Image
             style={{
               width: 50,
               height: 50,
+              borderRadius: 5,
             }}
             source={{ uri: cardInfo.image }}
           />

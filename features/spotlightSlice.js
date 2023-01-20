@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { baseUrl } from "../assets/data/baseUrl";
 
-export const fetchSpotligth = createAsyncThunk(
-  "NFT/fetchSpotligth",
+export const fetchSpotlight = createAsyncThunk(
+  "NFT/fetchSpotlight",
   async () => {
-    const response = await fetch(baseUrl + "Spotligth");
+    const response = await fetch(baseUrl + "spotlight");
     if (!response.ok) {
       return Promise.reject("Unable to fetch, status: " + response.status);
     }
@@ -13,24 +13,24 @@ export const fetchSpotligth = createAsyncThunk(
   }
 );
 
-const spotligthSlice = createSlice({
-  name: "spotligth",
-  initialState: { isLoading: true, errMess: null, spotligthArray: [] },
+const spotlightSlice = createSlice({
+  name: "spotlight",
+  initialState: { isLoading: true, errMess: null, spotlightArray: [] },
   reducers: {},
   extraReducers: {
-    [fetchSpotligth.pending]: (state) => {
+    [fetchSpotlight.pending]: (state) => {
       state.isLoading = true;
     },
-    [fetchSpotligth.fulfilled]: (state, action) => {
+    [fetchSpotlight.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.errMess = null;
-      state.campsitesArray = action.payload;
+      state.spotlightArray = action.payload;
     },
-    [fetchSpotligth.rejected]: (state, action) => {
+    [fetchSpotlight.rejected]: (state, action) => {
       state.isLoading = false;
       state.errMess = action.error ? action.error.message : "Fetch failed";
     },
   },
 });
 
-export const spotligthReducer = spotligthSlice.reducer;
+export const spotlightReducer = spotlightSlice.reducer;

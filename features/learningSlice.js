@@ -11,8 +11,8 @@ export const fetchLearning = createAsyncThunk("NFT/fetchLearning", async () => {
 });
 
 const learningSlice = createSlice({
-  name: "spotligth",
-  initialState: { isLoading: true, errMess: null, spotligthArray: [] },
+  name: "learning",
+  initialState: { isLoading: true, errMess: null, learningArray: [] },
   reducers: {},
   extraReducers: {
     [fetchLearning.pending]: (state) => {
@@ -21,7 +21,7 @@ const learningSlice = createSlice({
     [fetchLearning.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.errMess = null;
-      state.campsitesArray = action.payload;
+      state.learningArray = action.payload;
     },
     [fetchLearning.rejected]: (state, action) => {
       state.isLoading = false;

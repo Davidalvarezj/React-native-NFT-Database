@@ -16,11 +16,26 @@ import {
 import { useState } from "react";
 import { Card, Tile } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 import { SPOTLIGTH } from "../assets/data/spotligth";
 
 export default function CollectionScreen({ route, navigation }) {
-  console.log("Colectionroute: ", route);
-  const colectionselected = SPOTLIGTH.find((elm) => elm.id === route.params.id);
+  const spotligthstate = useSelector((state) => state.spotlight);
+  const topstate = useSelector((state) => state.top);
+
+  const spotlightArray = spotligthstate.spotlightArray;
+  const topArray = topstate.topArray;
+  // console.log("array: ", spotligthstate.spotlightArray);
+
+  let colectionselected = spotlightArray.find(
+    (elm) => elm.id === route.params.id
+  );
+  if (colectionselected == undefined) {
+    colectionselected = topArray.find((elm) => elm.id === route.params.id);
+  }
+  if (colectionselected == undefined) {
+    return <Text>Not found</Text>;
+  }
 
   return (
     <ScrollView>

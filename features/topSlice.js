@@ -21,7 +21,7 @@ const topSlice = createSlice({
     [fetchTop.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.errMess = null;
-      state.campsitesArray = action.payload;
+      state.topArray = action.payload;
     },
     [fetchTop.rejected]: (state, action) => {
       state.isLoading = false;

@@ -1,5 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -7,6 +9,10 @@ import HomeNavigation from "./HomeNavigation";
 import SearchNavigation from "./SearchNavigation";
 import StatsNavigation from "./StatsNavigation";
 import UserScreenNavigation from "./UserScreenNavigation";
+import { fetchCategories } from "../features/categoriesSlice";
+import { fetchLearning } from "../features/learningSlice";
+import { fetchSpotlight } from "../features/spotlightSlice";
+import { fetchTop } from "../features/topSlice";
 
 const screenOptions = {
   headerTintColor: "#fff",
@@ -17,6 +23,15 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 export default function Main() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+    dispatch(fetchLearning());
+    dispatch(fetchSpotlight());
+    dispatch(fetchTop());
+  }, [dispatch]);
+
   return (
     <Tab.Navigator screenOptions={screenOptions}>
       <Tab.Screen

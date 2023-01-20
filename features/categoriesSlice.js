@@ -24,7 +24,7 @@ const categoriesSlice = createSlice({
     [fetchCategories.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.errMess = null;
-      state.campsitesArray = action.payload;
+      state.categoriesArray = action.payload;
     },
     [fetchCategories.rejected]: (state, action) => {
       state.isLoading = false;
