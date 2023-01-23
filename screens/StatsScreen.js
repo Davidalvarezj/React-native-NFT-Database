@@ -9,7 +9,7 @@ export default function StatsScreen() {
   const topstate = useSelector((state) => state.top);
 
   const topArray = topstate.topArray;
-  const top10Array = topArray.filter((elm) => elm.rankedpos < 11);
+  const top10Array = topArray;
 
   // console.log("topstate: ", top10Array);
   return (

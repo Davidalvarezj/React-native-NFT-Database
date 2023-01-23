@@ -29,7 +29,7 @@ export default function Learning({ learningArray }) {
 const styles = StyleSheet.create({
   flatListContentContainer: { padding: 0 },
   cardImg: {
-    height: 150,
+    height: 160,
     backgroundColor: "rgba(0,0,0,0.1)",
     overflow: "hidden",
   },

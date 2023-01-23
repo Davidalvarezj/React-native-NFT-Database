@@ -1,10 +1,18 @@
 import { FlatList, Text, View, TouchableWithoutFeedback } from "react-native";
 import React from "react";
-import { Card, Image } from "react-native-elements";
+import { Card, Image, ListItem } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Topcomponent({ top5Array }) {
   // console.log("top 5 Array: ", top5Array);
+
+  const navigation = useNavigation();
+
+  function hanndlePress(cardInfo) {
+    console.log(cardInfo.id);
+
+    navigation.navigate("Collection", { id: cardInfo.id });
+  }
 
   return (
     <View
@@ -29,10 +37,10 @@ export default function Topcomponent({ top5Array }) {
         <Text
           style={{
             flex: 1,
-            fontSize: 10,
+            fontSize: 12,
             textAlign: "left",
             marginLeft: 20,
-            fontWeight: "bold",
+
             color: "#8C8B88",
             marginBottom: 10,
           }}
@@ -41,71 +49,93 @@ export default function Topcomponent({ top5Array }) {
         </Text>
         <Text
           style={{
-            fontSize: 10,
+            fontSize: 12,
             textAlign: "center",
             marginRight: 20,
-            fontWeight: "bold",
             color: "#8C8B88",
           }}
         >
           VOLUME
         </Text>
       </View>
-      <FlatList
-        data={top5Array}
-        renderItem={({ item }) => <List cardInfo={item} />}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={{ paddingTop: 0 }}
-      />
+      <View>
+        {top5Array.map((item, i) => (
+          <ListItem
+            key={i}
+            containerStyle={{
+              backgroundColor: "rgba(0, 0, 0, 0)",
+              margin: 5,
+              padding: 0,
+            }}
+          >
+            <TouchableWithoutFeedback onPress={() => hanndlePress(item)}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  paddingTop: 0,
+                }}
+              >
+                <View style={{ justifyContent: "center" }}>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      marginRight: 15,
+                      marginLeft: 10,
+                    }}
+                  >
+                    {item.rankedpos}
+                  </Text>
+                </View>
+                <View style={{ width: 60 }}>
+                  <Image
+                    style={{
+                      width: 60,
+                      height: 60,
+                      borderRadius: 10,
+                    }}
+                    source={{ uri: item.image }}
+                  />
+                </View>
+                <View style={{ width: 180, justifyContent: "center" }}>
+                  <Text
+                    style={{ fontSize: 13, fontWeight: "bold", marginLeft: 10 }}
+                  >
+                    {item.name}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      marginLeft: 10,
+                      color: "#8C8B88",
+                    }}
+                  >
+                    Floor: {item.price}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    width: 90,
+                    marginRight: 10,
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "bold",
+                      textAlign: "right",
+                    }}
+                  >
+                    {item.volume}
+                  </Text>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </ListItem>
+        ))}
+      </View>
     </View>
   );
 }
-
-const List = ({ cardInfo }) => {
-  const navigation = useNavigation();
-  function hanndlePress() {
-    console.log(cardInfo.id);
-
-    navigation.navigate("Collection", { id: cardInfo.id });
-  }
-  return (
-    <TouchableWithoutFeedback onPress={() => hanndlePress()}>
-      <View style={{ flexDirection: "row", paddingTop: 10 }}>
-        <View style={{ width: 20 }}>
-          <Text
-            style={{
-              fontSize: 12,
-              fontWeight: "bold",
-              textAlign: "center",
-            }}
-          >
-            {cardInfo.rankedpos}
-          </Text>
-        </View>
-        <View style={{ width: 50 }}>
-          <Image
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: 5,
-            }}
-            source={{ uri: cardInfo.image }}
-          />
-        </View>
-        <View style={{ width: 180 }}>
-          <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 10 }}>
-            {cardInfo.name}
-            <Text style={{ fontSize: 10 }}>{cardInfo.price}</Text>
-          </Text>
-        </View>
-        <View style={{ width: 100 }}>
-          <Text
-            style={{ fontSize: 12, fontWeight: "bold", textAlign: "center" }}
-          >
-            {cardInfo.volume}
-          </Text>
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};

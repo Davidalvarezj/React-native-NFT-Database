@@ -4,6 +4,7 @@ import { topReducer } from "../features/topSlice";
 import { categoriesReducer } from "../features/categoriesSlice";
 import { learningReducer } from "../features/learningSlice";
 import { favoritesReducer } from "../features/favoritesSlice";
+import { notableReducer } from "../features/notableSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     categories: categoriesReducer,
     learning: learningReducer,
     favorites: favoritesReducer,
+    notable: notableReducer,
   },
 });
