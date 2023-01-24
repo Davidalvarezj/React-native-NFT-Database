@@ -38,6 +38,18 @@ export default function UserScreen() {
   // console.log("favoriteState: ", favorite);
 
   let favoriteArray = favoritesCreateArray(favorite);
+  // let NFTArrayList = favoriteArray[0].nft;
+  // let NFTindex = favoriteArray[0].nftindex;
+  // let NFTArrayList2 = favoriteArray[1].nft;
+  // let NFTindex2 = favoriteArray[1].nftindex;
+
+  // console.log("Respond-favoriteArray: ", favoriteArray);
+  // console.log("NFTArrayList: ", NFTArrayList);
+  // console.log("NFTArrayList2: ", NFTArrayList2);
+  // console.log("NFTindex: ", NFTindex);
+  // console.log("NFTindex2: ", NFTindex2);
+
+  // console.log("NFT-Detail: ", NFTArrayList[NFTindex]);
 
   let favoriteCollection = favorite;
 
@@ -53,12 +65,13 @@ export default function UserScreen() {
         renderItem={({ item, index }) => (
           <DetailCard
             cardInfo={item}
-            index={index}
-            isFavorite={
-              !!favoriteCollection.filter((elm) => elm.item === index).length
-            }
+            index={item.nftindex}
+            collectionid={item.id}
+            isFavorite={true}
             markFavorite={() =>
-              dispatch(addFavorite({ collection: 99, item: index }))
+              dispatch(
+                addFavorite({ collection: item.id, item: item.nftindex })
+              )
             }
           />
         )}
@@ -79,12 +92,16 @@ const DetailCard = ({
   const halfWindowsWidth = Dimensions.get("window").width / 2;
   const goToDetailCard = () => {
     // console.log("Se undio una Card!");
-    // console.log("cardInfo: ", { ...cardInfo, id: collectionid });
+    // console.log("cardInfo: ", {
+    //   ...cardInfo.nft[cardInfo.nftindex],
+    //   id: collectionid,
+    // });
 
     navigation.navigate("Detail", {
       detail: {
-        ...cardInfo,
+        ...cardInfo.nft[cardInfo.nftindex],
         id: collectionid,
+        isFavorite: isFavorite,
         index: index,
       },
     });
@@ -105,17 +122,19 @@ const DetailCard = ({
         }}
       >
         <Card.Image
-          source={{ uri: cardInfo.image }}
+          source={{ uri: cardInfo.nft[cardInfo.nftindex].image }}
           style={styles.cardImg}
           onPress={() => goToDetailCard()}
         >
           <View style={{ justifyContent: "center", flex: 1 }}></View>
         </Card.Image>
 
-        <Text style={{ margin: 10, fontWeight: "bold" }}>{cardInfo.name} </Text>
+        <Text style={{ margin: 10, fontWeight: "bold" }}>
+          {cardInfo.nft[cardInfo.nftindex].name}{" "}
+        </Text>
 
         <Text style={{ fontWeight: "bold", marginLeft: 10 }}>
-          {cardInfo.price}
+          {cardInfo.nft[cardInfo.nftindex].price}
         </Text>
         <View style={styles.cardRow}>
           <Icon

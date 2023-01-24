@@ -8,31 +8,18 @@ function favoritesCreateArray(favoriteArray) {
   const spotlightArray = spotligthstate.spotlightArray;
   const topArray = topstate.topArray;
   const notableArray = notablestate.notableArray;
+  const TotalArray = [...spotlightArray, ...topArray, ...notableArray];
 
   console.log("favorites-Util function", favoriteArray);
   let NewArray = [];
 
   for (let i = 0; i < favoriteArray.length; i++) {
-    let filter1 = spotlightArray.find(
+    let filter = TotalArray.find(
       (elm) => elm.id == favoriteArray[i].collection
     );
-    if (!!filter1) {
-      let nftindex = favoriteArray[i].item;
-      NewArray.push({ ...filter1, nftindex: nftindex });
-    }
 
-    let filter2 = topArray.find((elm) => elm.id == favoriteArray[i].collection);
-    if (!!filter2) {
-      let nftindex = favoriteArray[i].item;
-      NewArray.push({ ...filter2, nftindex: nftindex });
-    }
-    let filter3 = notableArray.find(
-      (elm) => elm.id == favoriteArray[i].collection
-    );
-    if (!!filter3) {
-      let nftindex = favoriteArray[i].item;
-      NewArray.push({ ...filter3, nftindex: nftindex });
-    }
+    let nftindex = favoriteArray[i].item;
+    NewArray.push({ ...filter, nftindex: nftindex });
   }
   //   console.log("--NewArray--", NewArray);
   return NewArray;

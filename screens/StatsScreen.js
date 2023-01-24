@@ -3,7 +3,6 @@ import { Image } from "react-native-elements";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import Topcomponent from "../components/Topcomponent";
 
 export default function StatsScreen() {
   const topstate = useSelector((state) => state.top);
@@ -18,7 +17,7 @@ export default function StatsScreen() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 0,
+        marginTop: 20,
       }}
     >
       <View
@@ -60,8 +59,8 @@ export default function StatsScreen() {
       <FlatList
         data={top10Array}
         renderItem={({ item }) => <List cardInfo={item} />}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={{ paddingTop: 0 }}
+        keyExtractor={(item) => item.id.toString() + "-Stats"}
+        contentContainerStyle={{ paddingBottom: 50 }}
       />
     </View>
   );
@@ -77,13 +76,13 @@ const List = ({ cardInfo }) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => hanndlePress()}>
-      <View style={{ flexDirection: "row", paddingTop: 10 }}>
-        <View style={{ width: 20 }}>
+      <View style={{ flexDirection: "row", paddingTop: 15 }}>
+        <View style={{ width: 20, justifyContent: "center" }}>
           <Text
             style={{
               fontSize: 12,
               fontWeight: "bold",
-              textAlign: "center",
+              textAlign: "left",
             }}
           >
             {cardInfo.rankedpos}
@@ -98,13 +97,15 @@ const List = ({ cardInfo }) => {
             source={{ uri: cardInfo.image }}
           />
         </View>
-        <View style={{ width: 180 }}>
+        <View style={{ width: 180, justifyContent: "center" }}>
           <Text style={{ fontSize: 14, fontWeight: "bold", marginLeft: 10 }}>
             {cardInfo.name}
-            <Text style={{ fontSize: 10 }}>{cardInfo.price}</Text>
+          </Text>
+          <Text style={{ fontSize: 12, marginLeft: 10, color: "#8C8B88" }}>
+            Floor: {cardInfo.price}
           </Text>
         </View>
-        <View style={{ width: 100 }}>
+        <View style={{ width: 100, justifyContent: "center" }}>
           <Text
             style={{ fontSize: 12, fontWeight: "bold", textAlign: "center" }}
           >
