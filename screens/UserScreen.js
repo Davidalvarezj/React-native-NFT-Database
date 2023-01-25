@@ -1,24 +1,6 @@
-import {
-  SafeAreaView,
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  ImageBackground,
-  FlatList,
-  TouchableWithoutFeedback,
-  ScrollView,
-  SectionList,
-  Platform,
-  Modal,
-  Button,
-  Linking,
-  Dimensions,
-} from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { LinearGradient } from "expo-linear-gradient";
-import { useState } from "react";
-import { Card, Tile, ListItem, Icon } from "react-native-elements";
+import { Text, View, StyleSheet, FlatList, Dimensions } from "react-native";
+
+import { Card, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { addFavorite } from "../features/favoritesSlice";
 import { useSelector, useDispatch } from "react-redux";

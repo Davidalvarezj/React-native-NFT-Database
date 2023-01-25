@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-function favoritesCreateArray(favoriteArray) {
+export function favoritesCreateArray(favoriteArray) {
   const spotligthstate = useSelector((state) => state.spotlight);
   const topstate = useSelector((state) => state.top);
   const notablestate = useSelector((state) => state.notable);
@@ -25,4 +25,19 @@ function favoritesCreateArray(favoriteArray) {
   return NewArray;
 }
 
-export { favoritesCreateArray };
+export function searchData(str) {
+  const spotligthstate = useSelector((state) => state.spotlight);
+  const topstate = useSelector((state) => state.top);
+  const notablestate = useSelector((state) => state.notable);
+  const spotlightArray = spotligthstate.spotlightArray;
+  const topArray = topstate.topArray;
+  const notableArray = notablestate.notableArray;
+  let result = [];
+  const TotalArray = [...spotlightArray, ...topArray, ...notableArray];
+
+  result = TotalArray.filter((elm) => elm.name.includes(str));
+
+  console.log("result: ", result);
+
+  return result;
+}
