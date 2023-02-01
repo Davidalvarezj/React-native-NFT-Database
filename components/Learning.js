@@ -20,7 +20,7 @@ export default function Learning({ learningArray }) {
       showsHorizontalScrollIndicator={false}
       horizontal={true}
       keyExtractor={(elm, index) => String(`${elm.id}-${index}`)}
-      renderItem={({ item }) => <SpotligthCard cardInfo={item} />}
+      renderItem={({ item }) => <LearningCard cardInfo={item} />}
       contentContainerStyle={styles.flatListContentContainer}
     />
   );
@@ -35,22 +35,21 @@ const styles = StyleSheet.create({
   },
 });
 
-const SpotligthCard = ({ cardInfo }) => {
+const LearningCard = ({ cardInfo }) => {
   const navigation = useNavigation();
 
-  const goToSpotlight = () => {
-    console.log("Se undio una spotligth!");
-    console.log(cardInfo.id);
-    // navigation.navigate("Collection", { id: cardInfo.id });
+  const goToLearning = () => {
+    console.log("Se undio una Learning!", cardInfo);
+    navigation.navigate("Learning", { info: cardInfo });
   };
 
   return (
-    <TouchableWithoutFeedback onPress={goToSpotlight}>
+    <TouchableWithoutFeedback onPress={goToLearning}>
       <Card
         containerStyle={{
           padding: 0,
           borderRadius: 10,
-          height: 210,
+          height: 220,
           margin: 5,
           overflow: "hidden",
           flexGrow: 1,

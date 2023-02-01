@@ -1,13 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { baseUrl } from "../assets/data/baseUrl";
+import { db } from "../firebase.config";
+import { collection, getDocs } from "firebase/firestore";
 
 export const fetchNotable = createAsyncThunk("NFT/fetchNotable", async () => {
-  const response = await fetch(baseUrl + "notable");
-  if (!response.ok) {
-    return Promise.reject("Unable to fetch, status: " + response.status);
-  }
-  const data = await response.json();
+  const querySnapshot = await getDocs(collection(db, "notable"));
+  const data = [];
+  querySnapshot.forEach((doc) => {
+    data.push(doc.data());
+  });
   return data;
+
+  // const response = await fetch(baseUrl + "notable");
+  // if (!response.ok) {
+  //   return Promise.reject("Unable to fetch, status: " + response.status);
+  // }
+  // const data = await response.json();
+  // return data;
 });
 
 const notableSlice = createSlice({

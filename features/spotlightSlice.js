@@ -1,14 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { baseUrl } from "../assets/data/baseUrl";
+import { db } from "../firebase.config";
+import { collection, getDocs } from "firebase/firestore";
 
 export const fetchSpotlight = createAsyncThunk(
   "NFT/fetchSpotlight",
   async () => {
-    const response = await fetch(baseUrl + "spotlight");
-    if (!response.ok) {
-      return Promise.reject("Unable to fetch, status: " + response.status);
-    }
-    const data = await response.json();
+    // console.log("Inicio fetch Spotlight...");
+
+    const querySnapshot = await getDocs(collection(db, "spotlight"));
+    const data = [];
+    querySnapshot.forEach((doc) => {
+      data.push(doc.data());
+    });
+    data.sort((a, b) => a.id - b.id);
+
+    // const response = await fetch(baseUrl + "spotlight");
+    // if (!response.ok) {
+    //   return Promise.reject("Unable to fetch, status: " + response.status);
+    // }
+    // const data = await response.json();
     return data;
   }
 );

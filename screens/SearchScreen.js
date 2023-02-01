@@ -1,29 +1,38 @@
 import { Card, Icon, Input } from "react-native-elements";
-import { Text, View, StyleSheet, FlatList, Dimensions } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  Dimensions,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { searchData } from "../utils/favoritesCreateArray";
 
 export default function SearchScreen() {
   const [searchKey, setSearchKey] = useState("");
-  const [dataArray, setDataArray] = useState([]);
 
-  const startsearchArray = (inputText) => {
-    setSearchKey(inputText);
-    console.log("searchKey->", searchKey);
-    let returnData = searchData(inputText);
-    console.log("returnData->", returnData);
-    setDataArray(returnData);
-  };
+  let dataArray = [];
+
+  dataArray = searchData(searchKey);
+  // console.log("Search-dataArray->", dataArray);
+
+  if (!searchKey) {
+    dataArray = [];
+  }
 
   return (
     <>
       <View>
         <Input
           placeholder="Search NFT ..."
-          onChangeText={(data) => startsearchArray(data)}
+          onChangeText={(data) => {
+            setSearchKey(data);
+          }}
           value={searchKey}
           leftIcon={
             <Icon
@@ -49,12 +58,6 @@ export default function SearchScreen() {
               cardInfo={item}
               index={item.nftindex}
               collectionid={item.id}
-              isFavorite={true}
-              markFavorite={() =>
-                dispatch(
-                  addFavorite({ collection: item.id, item: item.nftindex })
-                )
-              }
             />
           )}
           contentContainerStyle={styles.flatListContentContainer}
@@ -64,77 +67,93 @@ export default function SearchScreen() {
   );
 }
 
-const DetailCard = ({
-  cardInfo,
-  collectionid,
-  isFavorite,
-  markFavorite,
-  index,
-}) => {
+const DetailCard = ({ cardInfo, collectionid, index }) => {
   const navigation = useNavigation();
   const halfWindowsWidth = Dimensions.get("window").width / 2;
-  const goToDetailCard = () => {
-    // console.log("Se undio una Card!");
-    // console.log("cardInfo: ", {
-    //   ...cardInfo.nft[cardInfo.nftindex],
-    //   id: collectionid,
-    // });
 
-    navigation.navigate("Detail", {
-      detail: {
-        ...cardInfo.nft[cardInfo.nftindex],
-        id: collectionid,
-        isFavorite: isFavorite,
-        index: index,
-      },
-    });
+  const goToCollection = () => {
+    navigation.navigate("Collection", { id: collectionid });
   };
 
   return (
-    <>
+    <TouchableWithoutFeedback onPress={() => goToCollection()}>
       <Card
         containerStyle={{
           padding: 0,
           borderRadius: 10,
-          height: 230,
+          height: 300,
           width: halfWindowsWidth - 25,
           margin: 0,
           marginLeft: 15,
           marginBottom: 10,
           overflow: "hidden",
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 6,
+          },
+          shadowOpacity: 0.37,
+          shadowRadius: 7.49,
+
+          elevation: 12,
         }}
       >
-        <Card.Image
-          source={{ uri: cardInfo.nft[cardInfo.nftindex].image }}
-          style={styles.cardImg}
-          onPress={() => goToDetailCard()}
-        >
+        <Card.Image source={{ uri: cardInfo.image }} style={styles.cardImg}>
           <View style={{ justifyContent: "center", flex: 1 }}></View>
         </Card.Image>
-
-        <Text style={{ margin: 10, fontWeight: "bold" }}>
-          {cardInfo.nft[cardInfo.nftindex].name}{" "}
-        </Text>
-
-        <Text style={{ fontWeight: "bold", marginLeft: 10 }}>
-          {cardInfo.nft[cardInfo.nftindex].price}
-        </Text>
-        <View style={styles.cardRow}>
+        <View
+          style={{
+            right: -60,
+            bottom: -110,
+          }}
+        >
           <Icon
-            name={isFavorite ? "heart" : "heart-o"}
+            name={"plus-circle"}
             type="font-awesome"
-            color={isFavorite ? "#f50" : "#43484C"}
-            size={20}
-            onPress={() => markFavorite()}
+            color={"#165D7F"}
+            size={30}
           />
         </View>
+        <View
+          style={{
+            position: "relative",
+            bottom: 30,
+          }}
+        >
+          <Text style={{ marginLeft: 10, marginTop: 10, fontWeight: "bold" }}>
+            {cardInfo.name}
+          </Text>
+          <Text
+            style={{
+              marginLeft: 15,
+              marginTop: 5,
+              marginBottom: 5,
+              fontWeight: "bold",
+              fontSize: 10,
+            }}
+          >
+            Floor Price: {cardInfo.price}
+          </Text>
+
+          <Text
+            style={{
+              fontSize: 10,
+              marginLeft: 15,
+              marginRight: 15,
+              textAlign: "justify",
+              color: "#8C8B88",
+            }}
+          >
+            {cardInfo.description.slice(0, 90) + "..."}
+          </Text>
+        </View>
       </Card>
-    </>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  flatListContentContainer: { paddingBottom: 100, marginTop: 50 },
+  flatListContentContainer: { paddingBottom: 100, marginTop: 10 },
 
   descconatiner: {
     padding: 20,

@@ -41,7 +41,7 @@ const SpotligthCard = ({ cardInfo }) => {
 
   const goToSpotlight = () => {
     console.log("Se undio una spotligth!");
-    console.log(cardInfo.id);
+    // console.log(cardInfo.id);
     // navigation.navigate("Collection", { id: cardInfo.id });
   };
 

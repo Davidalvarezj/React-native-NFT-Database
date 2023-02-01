@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, StyleSheet, View } from "react-native";
+import { SafeAreaView, Text, StyleSheet, View, Share } from "react-native";
 import { Card, Button, Icon } from "react-native-elements";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -18,6 +18,19 @@ export default function DetailCard({
   let isFavorite = !!favoriteCollection.filter(
     (elm) => elm.item === nftobj.index
   ).length;
+
+  const shareNFT = (title, msg, url) => {
+    Share.share(
+      {
+        title,
+        message: `${title}: ${msg} ${url}`,
+        url,
+      },
+      {
+        dialogTitle: "Share " + title,
+      }
+    );
+  };
 
   return (
     <View
@@ -84,6 +97,13 @@ export default function DetailCard({
             color="#5637DD"
             size={25}
             onPress={() => onShowModal()}
+          />
+          <Icon
+            name={"share"}
+            type="font-awesome"
+            color="#5637DD"
+            size={25}
+            onPress={() => shareNFT(nftobj.name, nftobj.price, nftobj.image)}
           />
         </View>
       </Card>

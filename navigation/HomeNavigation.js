@@ -6,11 +6,12 @@ import React from "react";
 import HomeScreen from "../screens/HomeScreen";
 import CollectionScreen from "../screens/CollectionScreen";
 import DetailScreen from "../screens/DetailScreen";
+import LearningScreen from "../screens/LearningScreen";
 
 const Stack = createStackNavigator();
 
 function LogoTitle() {
-  console.log(Platform.OS);
+  // console.log(Platform.OS);
   return (
     <View>
       <View
@@ -46,6 +47,16 @@ export default function HomeNavigation() {
       />
       <Stack.Screen name="Collection" component={CollectionScreen} />
       <Stack.Screen name="Detail" component={DetailScreen} />
+
+      <Stack.Screen
+        name="Learning"
+        component={LearningScreen}
+        options={{
+          headerTitle: () => (
+            <Text style={{ fontSize: 18, fontWeight: "bold" }}>NFT 101</Text>
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 }

@@ -10,7 +10,7 @@ export function favoritesCreateArray(favoriteArray) {
   const notableArray = notablestate.notableArray;
   const TotalArray = [...spotlightArray, ...topArray, ...notableArray];
 
-  console.log("favorites-Util function", favoriteArray);
+  // console.log("favorites-Util function", favoriteArray);
   let NewArray = [];
 
   for (let i = 0; i < favoriteArray.length; i++) {
@@ -25,19 +25,20 @@ export function favoritesCreateArray(favoriteArray) {
   return NewArray;
 }
 
-export function searchData(str) {
+export function searchData(str = "") {
+  let result = [];
+
   const spotligthstate = useSelector((state) => state.spotlight);
   const topstate = useSelector((state) => state.top);
   const notablestate = useSelector((state) => state.notable);
   const spotlightArray = spotligthstate.spotlightArray;
   const topArray = topstate.topArray;
   const notableArray = notablestate.notableArray;
-  let result = [];
+
   const TotalArray = [...spotlightArray, ...topArray, ...notableArray];
 
-  result = TotalArray.filter((elm) => elm.name.includes(str));
-
-  console.log("result: ", result);
-
+  result = TotalArray.filter((elm) =>
+    elm.name.toLowerCase().includes(str.toLowerCase())
+  );
   return result;
 }

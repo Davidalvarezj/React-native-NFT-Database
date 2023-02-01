@@ -36,7 +36,7 @@ export default function CollectionScreen({ route, navigation }) {
   const spotlightArray = spotligthstate.spotlightArray;
   const topArray = topstate.topArray;
   const notableArray = notablestate.notableArray;
-  // console.log("array: ", spotligthstate.spotlightArray);
+  // console.log("route: ", route);
 
   let colectionselected = spotlightArray.find(
     (elm) => elm.id === route.params.id

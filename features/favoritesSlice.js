@@ -26,8 +26,8 @@ const favoritesSlice = createSlice({
         favorites.push(action.payload);
       }
 
-      console.log("favoritesState--", favorites);
-      console.log("action.payload--", action.payload);
+      // console.log("favoritesState--", favorites);
+      // console.log("action.payload--", action.payload);
     },
   },
 });

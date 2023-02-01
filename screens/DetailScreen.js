@@ -11,6 +11,7 @@ import { useState } from "react";
 import { Card, Button, Icon, Rating, Input } from "react-native-elements";
 import { useSelector, useDispatch } from "react-redux";
 import { addFavorite } from "../features/favoritesSlice";
+import { addComment } from "../features/commentsSlice";
 
 import DetailCard from "../components/DetailCard";
 import React from "react";
@@ -18,25 +19,32 @@ import React from "react";
 export default function DetailScreen(route, navigation) {
   const nftobj = route.route.params.detail;
 
-  const com = useSelector((state) => state.comments);
+  const comment = useSelector((state) => state.comments);
   const favorite = useSelector((state) => state.favorites);
   const dispatch = useDispatch();
-  // console.log("favoriteArray:", favorite);
+  console.log("comment-State:", comment);
+  console.log("favorite-State:", favorite);
   // console.log("commentArray:", com);
   let favoriteCollection = favorite.filter(
     (elm) => elm.collection === nftobj.id
   );
+
+  let commentfilter = comment.filter(
+    (elm) => elm.colectionId === nftobj.id && elm.nftid === nftobj.index
+  );
+
+  console.log("commentfilter: ", commentfilter);
 
   const [showModal, setShowModal] = useState(false);
   const [rating, setRating] = useState(5);
   const [author, setAuthor] = useState("");
   const [text, setText] = useState("");
 
-  console.log("rating: ", rating);
-  console.log("author: ", author);
-  console.log("text: ", text);
-  console.log("Collection id: ", route.route.params.detail);
-  console.log(nftobj);
+  // console.log("rating: ", rating);
+  // console.log("author: ", author);
+  // console.log("text: ", text);
+  // console.log("Collection id: ", route.route.params.detail);
+  // console.log("nftobj", nftobj);
 
   const comments = [
     {
@@ -54,11 +62,13 @@ export default function DetailScreen(route, navigation) {
       author,
       rating,
       text,
-      campsiteId: 2,
+      colectionId: nftobj.id,
+      nftid: nftobj.index,
+      date: new Date().toISOString().slice(0, 10),
     };
     setShowModal(!showModal);
     console.log("newComment Obj: ", newComment);
-    // dispatch(postComment(newComment));
+    dispatch(addComment(newComment));
   };
   const resetForm = () => {
     setRating(5);
@@ -91,7 +101,7 @@ export default function DetailScreen(route, navigation) {
   return (
     <>
       <FlatList
-        data={comments}
+        data={commentfilter}
         renderItem={renderCommentItem}
         keyExtractor={(item) => item.author.toString()}
         contentContainerStyle={{ marginHorizontal: 20, paddingVertical: 20 }}
@@ -107,7 +117,11 @@ export default function DetailScreen(route, navigation) {
               onShowModal={() => setShowModal(!showModal)}
             />
 
-            <Text style={styles.commentsTitle}>Comments</Text>
+            {commentfilter.length > 0 ? (
+              <Text style={styles.commentsTitle}>Comments</Text>
+            ) : (
+              <></>
+            )}
           </>
         )}
       />
