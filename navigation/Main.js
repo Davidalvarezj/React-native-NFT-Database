@@ -14,6 +14,7 @@ import { fetchLearning } from "../features/learningSlice";
 import { fetchSpotlight } from "../features/spotlightSlice";
 import { fetchTop } from "../features/topSlice";
 import { fetchNotable } from "../features/notableSlice";
+import { fetchComments } from "../features/commentsSlice";
 
 const screenOptions = {
   headerTintColor: "#fff",
@@ -32,6 +33,7 @@ export default function Main() {
     dispatch(fetchSpotlight());
     dispatch(fetchTop());
     dispatch(fetchNotable());
+    dispatch(fetchComments());
   }, [dispatch]);
 
   return (

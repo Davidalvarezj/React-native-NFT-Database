@@ -11,6 +11,7 @@ export default function DetailCard({
   onShowModal,
 }) {
   const favorite = useSelector((state) => state.favorites);
+  console.log("favorite-State: ", favorite);
   let favoriteCollection = favorite.filter(
     (elm) => elm.collection === nftobj.id
   );

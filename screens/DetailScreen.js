@@ -19,11 +19,12 @@ import React from "react";
 export default function DetailScreen(route, navigation) {
   const nftobj = route.route.params.detail;
 
-  const comment = useSelector((state) => state.comments);
+  const commentobj = useSelector((state) => state.comments);
   const favorite = useSelector((state) => state.favorites);
   const dispatch = useDispatch();
-  console.log("comment-State:", comment);
-  console.log("favorite-State:", favorite);
+  console.log("comment-State:", commentobj);
+  const comment = commentobj.commentsArray;
+  // console.log("favorite-State:", favorite);
   // console.log("commentArray:", com);
   let favoriteCollection = favorite.filter(
     (elm) => elm.collection === nftobj.id
@@ -45,17 +46,6 @@ export default function DetailScreen(route, navigation) {
   // console.log("text: ", text);
   // console.log("Collection id: ", route.route.params.detail);
   // console.log("nftobj", nftobj);
-
-  const comments = [
-    {
-      id: 1,
-      campsiteId: 1,
-      rating: 5,
-      text: "The grass was indeed greener here than our last campsite.",
-      author: "Simon Hunt",
-      date: "2018-10-25T16:30Z",
-    },
-  ];
 
   const handleSubmit = () => {
     const newComment = {
@@ -205,7 +195,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   commentItem: {
-    paddingVertical: 10,
+    paddingVertical: 20,
     paddingHorizontal: 20,
     backgroundColor: "#fff",
   },
